@@ -5,6 +5,11 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Goutte\Client;
 use Symfony\Component\HttpClient\HttpClient;
+use App\MatchData;
+use App\Player;
+use App\Team;
+use App\Game;
+
 
 class scrapeOvergg extends Command
 {
@@ -39,15 +44,52 @@ class scrapeOvergg extends Command
      */
     public function handle()
     {
+        //Crawl the web page
         $client = new Client(HttpClient::create(['timeout' => 60]));
-        $crawler = $client->request('GET', 'https://www.over.gg/11959/ldn-vs-sfs-overwatch-league-2019-season-p-offs-lr1/?map=1');
+        $crawler = $client->request('GET', 'https://www.over.gg/11959/ldn-vs-sfs-overwatch-league-2019-season-p-offs-lr1/');
 
-        $matchData = [];
-
-        $crawler->filter('.match-stats')->each(function ($node) {
-            $matchData[] = $node->text()."\n";
+        //Return the player data
+        $match_data = $crawler->filter('.match-stats > div')->each(function ($node, $key) {
+            $team_data = $node->filter('tr')->each(function ($n, $i) {
+                $data = $n->text();
+                return $data;
+            });
+            return $team_data;
         });
+        
+        
 
-        dd($matchData);
+        //Format the player data
+        foreach($match_data as $map_key => $map_data) {
+            foreach($map_data as $player_key => $player_data) {
+                //Removing 'Team' row & Empty rows
+                if(!$player_data === 'Team K A D DMG H U T' || strpos($player_data, '-') == false) {
+                } else {
+                    $player_data = explode(' ', $player_data);
+                    $player_stats = [];
+
+                    foreach($player_data as $data) {
+                        if($data == '-') {
+                            
+                        } else {
+                            $player_info[] = $data;
+                        }
+                    }
+                    
+                    $player_name = $player_info[0];
+                    $player_role = $player_info[1];
+
+                    $current_player = Player::where('name', $player_name)->where('role', $player_role)->first();
+
+
+                    
+                }
+            }
+        }
+
+        dd($match_data);
+
+        //Add the data to database
+
     }
 }
