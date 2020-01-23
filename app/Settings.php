@@ -4,14 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Team extends Model
+class Settings extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'team';
+    protected $table = 'settings';
 
     /**
      * The attributes that are mass assignable.
@@ -19,6 +19,6 @@ class Team extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'main_colour', 'second_colour', 'third_colour', 'logo_url'
+        'name', 'value'
     ];
 }

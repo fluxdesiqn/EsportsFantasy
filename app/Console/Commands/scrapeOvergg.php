@@ -57,11 +57,12 @@ class scrapeOvergg extends Command
             return $team_data;
         });
         
-        
+        $data = [];
 
         //Format the player data
         foreach($match_data as $map_key => $map_data) {
             foreach($map_data as $player_key => $player_data) {
+
                 //Removing 'Team' row & Empty rows
                 if(!$player_data === 'Team K A D DMG H U T' || strpos($player_data, '-') == false) {
                 } else {
@@ -70,7 +71,6 @@ class scrapeOvergg extends Command
 
                     foreach($player_data as $data) {
                         if($data == '-') {
-                            
                         } else {
                             $player_info[] = $data;
                         }
@@ -79,17 +79,26 @@ class scrapeOvergg extends Command
                     $player_name = $player_info[0];
                     $player_role = $player_info[1];
 
-                    $current_player = Player::where('name', $player_name)->where('role', $player_role)->first();
-
-
-                    
+                    $data = [
+                        $player_name => [
+                            $map_key => [
+                                'eliminations'  => $player_info[2],
+                                'deaths'        => $player_info[3],
+                                'damage'        => $player_info[4],
+                                'healing'       => $player_data[5]  
+                            ]
+                        ]
+                    ];
                 }
+                
             }
         }
 
-        dd($match_data);
+        dd($data);
 
         //Add the data to database
+
+
 
     }
 }

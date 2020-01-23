@@ -11,5 +11,14 @@ class MatchData extends Model
      *
      * @var string
      */
-    protected $table = 'match_data';
+    protected $table = 'matchdata';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'game_id', 'player_id', 'eliminations', 'deaths', 'damage', 'healing' 
+    ];
 }

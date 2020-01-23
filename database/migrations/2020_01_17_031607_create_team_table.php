@@ -16,9 +16,10 @@ class CreateTeamTable extends Migration
         Schema::create('team', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('division');
+            $table->string('logo_url');
             $table->string('main_colour');
             $table->string('second_colour');
+            $table->string('third_colour');
             $table->timestamps();
         });
     }

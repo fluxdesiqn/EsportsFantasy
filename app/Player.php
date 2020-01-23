@@ -19,6 +19,6 @@ class Player extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'country', 'role','team_id'
+        'name', 'headshot_link', 'role','team_id','api_id'
     ];
 }

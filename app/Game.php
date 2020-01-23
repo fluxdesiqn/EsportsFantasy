@@ -19,6 +19,6 @@ class Game extends Model
      * @var array
      */
     protected $fillable = [
-        'date', 'game_week', 'game_type', 'location', 'home_team_id', 'away_team_id'
+        'date', 'game_week_id', 'location', 'home_team_id', 'away_team_id', 'api_id'
     ];
 }
