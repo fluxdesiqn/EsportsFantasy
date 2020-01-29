@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Player;
 
 class Team extends Model
 {
@@ -21,4 +22,9 @@ class Team extends Model
     protected $fillable = [
         'name', 'main_colour', 'second_colour', 'third_colour', 'logo_url'
     ];
+
+    public function players()
+    {
+        return $this->hasMany(Player::class, 'id', 'team_id');
+    }
 }

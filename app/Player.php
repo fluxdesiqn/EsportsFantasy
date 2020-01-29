@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Team;
 
 class Player extends Model
 {
@@ -21,4 +22,9 @@ class Player extends Model
     protected $fillable = [
         'name', 'headshot_link', 'role','team_id','api_id'
     ];
+
+    public function team()
+    {
+        return $this->hasOne(Team::class, 'team_id');
+    }
 }
